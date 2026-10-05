@@ -7,6 +7,12 @@ API; such changes are marked **BREAKING**.
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-05
+
+The first release: decline codes from Visa, Mastercard, ISO 8583 and Stripe read into one
+set of reasons and classes, and a retry policy with the card networks' rules as a ceiling.
+Data as of Visa Core Rules, 18 April 2026.
+
 ### Added
 
 - Normalized reasons and five classes (`never`, `later`, `fix_data`, `customer_action`,
@@ -20,3 +26,6 @@ API; such changes are marked **BREAKING**.
   network's raw codes when Stripe passes them on).
 - `RetryPolicy` with the network rules as a ceiling over your `Schedule`; every `Decision`
   names its rule and source.
+
+[Unreleased]: https://github.com/IanFoxDev/decline-codes/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/IanFoxDev/decline-codes/releases/tag/v0.1.0

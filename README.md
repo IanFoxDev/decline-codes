@@ -6,7 +6,9 @@ Payment decline codes normalized across card networks and payment providers, and
 policy that follows the networks' reattempt rules. Every rule names its source and the
 edition of the document it comes from. The data is JSON, so other languages can use it too.
 
-> Status: in development, nothing released yet.
+> Status: v0.1. Until 1.0 a minor version may change the API; such changes are marked
+> **BREAKING** in the [CHANGELOG](CHANGELOG.md). A network's rule change is a minor
+> release too, and the CHANGELOG names the rule and the edition.
 
 Retrying declined payments usually runs on one schedule for every decline: tomorrow, in
 three days, in a week. Two things go wrong with that.
