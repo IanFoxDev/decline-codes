@@ -27,6 +27,9 @@ final class CodeProfile
     /** @var list<Limit> */
     private array $limits = [];
 
+    /** Where the advice codes come from, when the profile has them. */
+    public readonly ?Source $adviceSource;
+
     /**
      * @param array<mixed> $data
      * @internal use Catalog::iso8583() or Catalog::mastercard()
@@ -43,13 +46,18 @@ final class CodeProfile
         foreach (Data::list($data, 'codes') as $code) {
             $this->codes[Data::string($code, 'code')] = $code;
         }
+        $adviceSource = null;
         if (isset($data['advice_codes'])) {
+            $names = Data::object($data, 'advice_codes')['sources'] ?? [];
+            $first = \is_array($names) ? ($names[0] ?? null) : null;
+            $adviceSource = \is_string($first) ? ($this->sources[$first] ?? null) : null;
             foreach (Data::list(Data::object($data, 'advice_codes'), 'codes') as $advice) {
                 $code = Data::string($advice, 'code');
                 $wait = isset($advice['wait_hours']) ? Data::int($advice, 'wait_hours') : null;
                 $this->advice[$code] = new Advice($code, Data::string($advice, 'meaning'), Data::string($advice, 'effect'), $wait);
             }
         }
+        $this->adviceSource = $adviceSource;
         foreach (isset($data['limits']) ? Data::list($data, 'limits') : [] as $limit) {
             $window = isset($limit['window_hours']) ? Data::int($limit, 'window_hours') * 3600 : Data::int($limit, 'window_days') * 86400;
             $same = array_values(array_filter(\is_array($limit['same'] ?? null) ? $limit['same'] : [], 'is_string'));

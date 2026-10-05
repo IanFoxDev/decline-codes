@@ -93,7 +93,7 @@ final class RetryPolicy
                     'Mastercard sent Merchant Advice Code %s (%s); resubmitting is charged as an excessive retry.',
                     $advice->code,
                     $advice->meaning,
-                ), null, $this->catalog->mastercard()->source);
+                ), null, $this->catalog->mastercard()->adviceSource);
             }
         }
         $last = $attempts[\count($attempts) - 1]->decline;
@@ -146,7 +146,7 @@ final class RetryPolicy
                     'Mastercard sent Merchant Advice Code %s: %s.',
                     $advice->code,
                     lcfirst($advice->meaning),
-                ), $last->at->modify(\sprintf('+%d hours', $advice->waitHours)), $network->source);
+                ), $last->at->modify(\sprintf('+%d hours', $advice->waitHours)), $this->catalog->mastercard()->adviceSource);
             }
         }
         if ($mastercard) {

@@ -102,6 +102,8 @@ final class RetryPolicyTest extends TestCase
         $wait = $policy->decide([$this->mastercard('2026-10-01 10:00', '51', '28')]);
         self::assertSame('mastercard.mac_28', $wait->rule);
         self::assertSame('2026-10-07 10:00', $wait->notBefore?->format('Y-m-d H:i'));
+        self::assertNotNull($wait->source);
+        self::assertStringContainsString('Merchant Advice Code', $wait->source->document);
 
         // A MAC asking for 1 hour does not shorten the schedule's own day.
         self::assertSame('schedule.later', $policy->decide([$this->mastercard('2026-10-01 10:00', '51', '24')])->rule);
