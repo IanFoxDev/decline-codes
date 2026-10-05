@@ -1,0 +1,11 @@
+name: Feature request
+description: A network, processor profile or policy rule you need
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: case
+    attributes:
+      label: What you need
+      description: For a processor profile, a link to its decline code list. For a rule, the network's wording and source.
+    validations:
+      required: true

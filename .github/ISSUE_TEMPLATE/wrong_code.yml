@@ -1,0 +1,24 @@
+name: Wrong or outdated code or rule
+description: A code means something else, or a network changed a rule
+labels: ["data"]
+body:
+  - type: input
+    id: what
+    attributes:
+      label: Network or processor, and code or rule
+      placeholder: Visa 83, or Mastercard consecutive declines
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: The document, its edition or date, and a link. Say whether it is the network's own rules or a processor's documentation.
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: What it says, and what the data says now
+    validations:
+      required: true
