@@ -186,6 +186,21 @@
       "id": "do_not_try_again",
       "class": "never",
       "description": "The issuer or network says not to try again."
+    },
+    {
+      "id": "duplicate_transaction",
+      "class": "never",
+      "description": "The same transaction was already submitted; check for an existing payment instead of retrying."
+    },
+    {
+      "id": "account_lifecycle",
+      "class": "fix_data",
+      "description": "The account behind the card changed: closed, expired or replaced. Mastercard code 79."
+    },
+    {
+      "id": "policy_decline",
+      "class": "later",
+      "description": "The issuer declined under its own policy. Mastercard code 82."
     }
   ]
 }

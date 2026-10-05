@@ -1,0 +1,454 @@
+{
+  "network": "mastercard",
+  "source": {
+    "document": "Mastercard rules are not publicly readable (the rules PDF answers 403); values from processors' documentation",
+    "verified": "secondary",
+    "url": "https://developers.tabapay.com/docs/merchant-advice-code-mac"
+  },
+  "sources": {
+    "iso8583": {
+      "document": "ISO 8583:1987 response codes (field 39), as listed on Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/ISO_8583",
+      "verified": "secondary"
+    },
+    "tabapay": {
+      "document": "TabaPay developer docs, Merchant Advice Code (MAC)",
+      "edition": "2026-09-30",
+      "url": "https://developers.tabapay.com/docs/merchant-advice-code-mac",
+      "verified": "secondary"
+    },
+    "adyen": {
+      "document": "Adyen docs, raw acquirer responses",
+      "url": "https://docs.adyen.com/development-resources/raw-acquirer-responses",
+      "verified": "secondary"
+    },
+    "braintree": {
+      "document": "Braintree, Mastercard Spring 2024 network updates (mc-s24)",
+      "edition": "2024",
+      "url": "https://developer.paypal.com/braintree/articles/risk-and-security/compliance/network-updates/2024/mc-s24",
+      "verified": "secondary"
+    },
+    "paya": {
+      "document": "Paya support, Mastercard Excessive Authorization Attempts",
+      "url": "https://support.paya.com/44505-fees/mastercard-excessive-authorization-attempts",
+      "verified": "secondary"
+    }
+  },
+  "advice_codes": {
+    "sources": [
+      "tabapay",
+      "adyen"
+    ],
+    "codes": [
+      {
+        "code": "01",
+        "meaning": "New account information available",
+        "effect": "update_credentials"
+      },
+      {
+        "code": "02",
+        "meaning": "Cannot approve at this time, try again later",
+        "effect": "later"
+      },
+      {
+        "code": "03",
+        "meaning": "Do not try again",
+        "effect": "never"
+      },
+      {
+        "code": "04",
+        "meaning": "Token requirements not fulfilled for this token type",
+        "effect": "fix_data"
+      },
+      {
+        "code": "05",
+        "meaning": "Negotiated value not approved",
+        "effect": "none"
+      },
+      {
+        "code": "21",
+        "meaning": "Payment cancellation",
+        "effect": "never"
+      },
+      {
+        "code": "22",
+        "meaning": "Merchant does not qualify for product code",
+        "effect": "none"
+      },
+      {
+        "code": "24",
+        "meaning": "Retry after 1 hour",
+        "effect": "wait",
+        "wait_hours": 1
+      },
+      {
+        "code": "25",
+        "meaning": "Retry after 24 hours",
+        "effect": "wait",
+        "wait_hours": 24
+      },
+      {
+        "code": "26",
+        "meaning": "Retry after 2 days",
+        "effect": "wait",
+        "wait_hours": 48
+      },
+      {
+        "code": "27",
+        "meaning": "Retry after 4 days",
+        "effect": "wait",
+        "wait_hours": 96
+      },
+      {
+        "code": "28",
+        "meaning": "Retry after 6 days",
+        "effect": "wait",
+        "wait_hours": 144
+      },
+      {
+        "code": "29",
+        "meaning": "Retry after 8 days",
+        "effect": "wait",
+        "wait_hours": 192
+      },
+      {
+        "code": "30",
+        "meaning": "Retry after 10 days",
+        "effect": "wait",
+        "wait_hours": 240
+      },
+      {
+        "code": "40",
+        "meaning": "Consumer non-reloadable prepaid card",
+        "effect": "none"
+      },
+      {
+        "code": "41",
+        "meaning": "Consumer single-use virtual card number",
+        "effect": "none"
+      }
+    ]
+  },
+  "limits": [
+    {
+      "id": "consecutive_declines",
+      "max_declines": 10,
+      "window_hours": 24,
+      "same": [
+        "card",
+        "acceptor"
+      ],
+      "effective_from": "2022-10-01",
+      "sources": [
+        "paya",
+        "braintree"
+      ],
+      "note": "Stop after 10 consecutive declines on the same card at the same card acceptor within 24 hours; the threshold was 20 before 1 October 2022."
+    },
+    {
+      "id": "declines_same_amount",
+      "max_declines": 35,
+      "window_days": 30,
+      "same": [
+        "card",
+        "acceptor",
+        "amount"
+      ],
+      "effective_from": "2024-04-01",
+      "sources": [
+        "braintree"
+      ],
+      "note": "Braintree describes this in its Canada network update; other processors describe it without a region, and one gives 1 August 2024. Applied everywhere from the earlier date, as the stricter reading."
+    }
+  ],
+  "codes": [
+    {
+      "code": "01",
+      "meaning": "Refer to card issuer",
+      "reason": "call_issuer",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "02",
+      "meaning": "Refer to card issuer's special conditions",
+      "reason": "call_issuer",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "03",
+      "meaning": "Invalid merchant",
+      "reason": "invalid_merchant",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "04",
+      "meaning": "Pick-up",
+      "reason": "pickup_card",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "05",
+      "meaning": "Do not honor",
+      "reason": "do_not_honor",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "06",
+      "meaning": "Error",
+      "reason": "processing_error",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "07",
+      "meaning": "Pick-up card, special condition",
+      "reason": "fraudulent",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "12",
+      "meaning": "Invalid transaction",
+      "reason": "transaction_not_allowed",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "13",
+      "meaning": "Invalid amount",
+      "reason": "invalid_amount",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "14",
+      "meaning": "Invalid card number (no such number)",
+      "reason": "invalid_number",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "15",
+      "meaning": "No such issuer",
+      "reason": "invalid_account",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "19",
+      "meaning": "Re-enter transaction",
+      "reason": "reenter_transaction",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "21",
+      "meaning": "No action taken",
+      "reason": "generic_decline",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "22",
+      "meaning": "Suspected malfunction",
+      "reason": "processing_error",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "30",
+      "meaning": "Format error",
+      "reason": "processing_error",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "31",
+      "meaning": "Bank not supported by switch",
+      "reason": "issuer_not_available",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "33",
+      "meaning": "Expired card",
+      "reason": "expired_card",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "34",
+      "meaning": "Suspected fraud",
+      "reason": "suspected_fraud",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "36",
+      "meaning": "Restricted card",
+      "reason": "restricted_card",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "38",
+      "meaning": "Allowable PIN tries exceeded",
+      "reason": "pin_try_exceeded",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "39",
+      "meaning": "No credit account",
+      "reason": "invalid_account",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "40",
+      "meaning": "Requested function not supported",
+      "reason": "transaction_not_allowed",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "41",
+      "meaning": "Lost card",
+      "reason": "lost_card",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "42",
+      "meaning": "No universal account",
+      "reason": "invalid_account",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "43",
+      "meaning": "Stolen card, pick-up",
+      "reason": "stolen_card",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "44",
+      "meaning": "No investment account",
+      "reason": "invalid_account",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "51",
+      "meaning": "Not sufficient funds",
+      "reason": "insufficient_funds",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "52",
+      "meaning": "No checking account",
+      "reason": "invalid_account",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "53",
+      "meaning": "No savings account",
+      "reason": "invalid_account",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "54",
+      "meaning": "Expired card",
+      "reason": "expired_card",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "55",
+      "meaning": "Incorrect personal identification number",
+      "reason": "incorrect_pin",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "56",
+      "meaning": "No card record",
+      "reason": "invalid_number",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "57",
+      "meaning": "Transaction not permitted to cardholder",
+      "reason": "transaction_not_allowed",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "58",
+      "meaning": "Transaction not permitted to terminal",
+      "reason": "transaction_not_allowed",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "59",
+      "meaning": "Suspected fraud",
+      "reason": "suspected_fraud",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "61",
+      "meaning": "Exceeds withdrawal amount limit",
+      "reason": "card_velocity_exceeded",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "62",
+      "meaning": "Restricted card",
+      "reason": "restricted_card",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "63",
+      "meaning": "Security violation",
+      "reason": "suspected_fraud",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "65",
+      "meaning": "Exceeds withdrawal frequency limit",
+      "reason": "card_velocity_exceeded",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "75",
+      "meaning": "Allowable number of PIN tries exceeded",
+      "reason": "pin_try_exceeded",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "91",
+      "meaning": "Issuer or switch is inoperative",
+      "reason": "issuer_not_available",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "92",
+      "meaning": "Financial institution or intermediate network facility cannot be found for routing",
+      "reason": "issuer_not_available",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "93",
+      "meaning": "Transaction cannot be completed. Violation of law",
+      "reason": "transaction_not_allowed",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "94",
+      "meaning": "Duplicate transmission",
+      "reason": "duplicate_transaction",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "96",
+      "meaning": "System malfunction",
+      "reason": "processing_error",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "79",
+      "meaning": "Life cycle (card-not-present; sent with MAC 01 or 03)",
+      "reason": "account_lifecycle",
+      "meaning_source": "tabapay"
+    },
+    {
+      "code": "82",
+      "meaning": "Policy (card-not-present; sent with MAC 01 or 03)",
+      "reason": "policy_decline",
+      "meaning_source": "tabapay"
+    },
+    {
+      "code": "83",
+      "meaning": "Security (card-not-present; sent with MAC 01 or 03)",
+      "reason": "suspected_fraud",
+      "meaning_source": "tabapay"
+    }
+  ]
+}
