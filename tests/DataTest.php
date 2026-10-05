@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class DataTest extends TestCase
 {
-    private const array NETWORKS = ['visa.json'];
+    private const array NETWORKS = ['visa.json', 'iso8583.json', 'mastercard.json'];
 
     public function testClassesMatchTheEnum(): void
     {
@@ -60,6 +60,12 @@ final class DataTest extends TestCase
                     self::assertNotNull(DeclineClass::tryFrom($class), "$file $code");
                 }
                 $codes[] = $code;
+            }
+            foreach (isset($network['limits']) ? Data::list($network, 'limits') : [] as $limit) {
+                foreach (\is_array($limit['sources'] ?? null) ? $limit['sources'] : [] as $name) {
+                    self::assertIsString($name);
+                    self::assertArrayHasKey($name, $sources, "$file limit");
+                }
             }
         }
     }

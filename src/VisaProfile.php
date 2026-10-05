@@ -63,7 +63,7 @@ final class VisaProfile
         if ($region !== null && !\in_array($region, self::REGIONS, true)) {
             throw new \InvalidArgumentException(\sprintf('Unknown Visa region "%s"; use one of %s.', $region, implode(', ', self::REGIONS)));
         }
-        $code = self::normalize($code);
+        $code = Codes::normalize($code);
         $record = $this->codes[$code] ?? null;
         if ($record === null) {
             return new Decline('visa', $code, 'Not listed in Table 7-2; all other decline codes are category 4.', $this->catalog->reason('generic_decline'), $this->categories[4]['class'], $this->source, 4);
@@ -121,15 +121,5 @@ final class VisaProfile
         }
 
         return $reason->class;
-    }
-
-    private static function normalize(string|int $code): string
-    {
-        $code = strtoupper(trim((string) $code));
-        if (preg_match('/^[0-9A-Z]{1,3}$/', $code) !== 1) {
-            throw new \InvalidArgumentException(\sprintf('"%s" is not a decline response code.', $code));
-        }
-
-        return \strlen($code) === 1 ? '0' . $code : $code;
     }
 }

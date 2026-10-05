@@ -16,6 +16,10 @@ final class Catalog
 
     private ?VisaProfile $visa = null;
 
+    private ?CodeProfile $iso8583 = null;
+
+    private ?CodeProfile $mastercard = null;
+
     public function __construct(private readonly string $directory = __DIR__ . '/../data')
     {
         $data = Data::file($this->directory . '/reasons.json');
@@ -41,6 +45,16 @@ final class Catalog
     public function reasons(): array
     {
         return $this->reasons;
+    }
+
+    public function iso8583(): CodeProfile
+    {
+        return $this->iso8583 ??= new CodeProfile($this, Data::file($this->directory . '/iso8583.json'));
+    }
+
+    public function mastercard(): CodeProfile
+    {
+        return $this->mastercard ??= new CodeProfile($this, Data::file($this->directory . '/mastercard.json'));
     }
 
     public function visa(): VisaProfile

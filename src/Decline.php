@@ -17,7 +17,7 @@ final readonly class Decline
         public DeclineClass $class,
         public Source $source,
         public ?int $category = null,
-        public ?string $adviceCode = null,
+        public ?Advice $advice = null,
     ) {}
 
     /**
