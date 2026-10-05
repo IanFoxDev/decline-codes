@@ -1,0 +1,191 @@
+{
+  "classes": [
+    {
+      "id": "never",
+      "description": "Never retry with the same card. The customer has to give another payment method."
+    },
+    {
+      "id": "later",
+      "description": "The issuer cannot approve now. Retry later, within the network's limits."
+    },
+    {
+      "id": "fix_data",
+      "description": "The card data was wrong or out of date. Retry only after it is corrected."
+    },
+    {
+      "id": "customer_action",
+      "description": "The customer has to do something first: authenticate, enter a PIN, confirm new card details."
+    },
+    {
+      "id": "technical",
+      "description": "A failure between the networks or systems. Retry soon, within the network's limits."
+    }
+  ],
+  "reasons": [
+    {
+      "id": "insufficient_funds",
+      "class": "later",
+      "description": "The account does not have enough funds."
+    },
+    {
+      "id": "do_not_honor",
+      "class": "later",
+      "description": "The issuer declined without saying why."
+    },
+    {
+      "id": "generic_decline",
+      "class": "later",
+      "description": "Declined for a reason the issuer did not specify."
+    },
+    {
+      "id": "call_issuer",
+      "class": "later",
+      "description": "The issuer asks to be contacted (refer to card issuer)."
+    },
+    {
+      "id": "card_velocity_exceeded",
+      "class": "later",
+      "description": "An amount or frequency limit on the card was exceeded."
+    },
+    {
+      "id": "invalid_amount",
+      "class": "later",
+      "description": "The amount is not valid or not supported for this card."
+    },
+    {
+      "id": "restricted_card",
+      "class": "later",
+      "description": "The card cannot be used here, for example in this region."
+    },
+    {
+      "id": "account_blocked",
+      "class": "later",
+      "description": "The account is temporarily blocked."
+    },
+    {
+      "id": "blocked_by_cardholder",
+      "class": "later",
+      "description": "The cardholder blocked this kind of payment."
+    },
+    {
+      "id": "transaction_not_allowed",
+      "class": "later",
+      "description": "This kind of transaction is not permitted for the card."
+    },
+    {
+      "id": "invalid_merchant",
+      "class": "later",
+      "description": "The issuer does not accept the merchant."
+    },
+    {
+      "id": "suspected_fraud",
+      "class": "later",
+      "description": "The issuer suspects fraud."
+    },
+    {
+      "id": "pin_try_exceeded",
+      "class": "later",
+      "description": "Too many incorrect PIN entries."
+    },
+    {
+      "id": "issuer_not_available",
+      "class": "technical",
+      "description": "The issuer or the switch could not be reached."
+    },
+    {
+      "id": "processing_error",
+      "class": "technical",
+      "description": "An error occurred while processing."
+    },
+    {
+      "id": "reenter_transaction",
+      "class": "technical",
+      "description": "The issuer asks to submit the transaction again."
+    },
+    {
+      "id": "expired_card",
+      "class": "fix_data",
+      "description": "The card has expired or the expiry date is missing."
+    },
+    {
+      "id": "incorrect_cvc",
+      "class": "fix_data",
+      "description": "The security code (CVV2, CVC) check failed."
+    },
+    {
+      "id": "incorrect_pin",
+      "class": "fix_data",
+      "description": "The PIN is incorrect or missing."
+    },
+    {
+      "id": "cardholder_data_mismatch",
+      "class": "fix_data",
+      "description": "The cardholder's details do not match the issuer's records."
+    },
+    {
+      "id": "authentication_required",
+      "class": "customer_action",
+      "description": "The customer has to authenticate, for example with 3-D Secure."
+    },
+    {
+      "id": "pin_required",
+      "class": "customer_action",
+      "description": "The issuer asks for the PIN."
+    },
+    {
+      "id": "new_account_information",
+      "class": "customer_action",
+      "description": "The card has new details; update them before trying again."
+    },
+    {
+      "id": "lost_card",
+      "class": "never",
+      "description": "The card is reported lost."
+    },
+    {
+      "id": "stolen_card",
+      "class": "never",
+      "description": "The card is reported stolen."
+    },
+    {
+      "id": "pickup_card",
+      "class": "never",
+      "description": "The issuer asks to keep the card."
+    },
+    {
+      "id": "fraudulent",
+      "class": "never",
+      "description": "The issuer flagged the account as fraudulent."
+    },
+    {
+      "id": "invalid_number",
+      "class": "never",
+      "description": "The card number does not exist."
+    },
+    {
+      "id": "invalid_account",
+      "class": "never",
+      "description": "The account is closed, does not exist, or the issuer is unknown."
+    },
+    {
+      "id": "stop_payment_order",
+      "class": "never",
+      "description": "The cardholder ordered the issuer to stop this payment."
+    },
+    {
+      "id": "revocation_of_authorization",
+      "class": "never",
+      "description": "The cardholder revoked the authorization for this merchant."
+    },
+    {
+      "id": "revocation_of_all_authorizations",
+      "class": "never",
+      "description": "The cardholder revoked all recurring authorizations."
+    },
+    {
+      "id": "do_not_try_again",
+      "class": "never",
+      "description": "The issuer or network says not to try again."
+    }
+  ]
+}

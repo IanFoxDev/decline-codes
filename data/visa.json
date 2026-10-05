@@ -1,0 +1,380 @@
+{
+  "network": "visa",
+  "source": {
+    "document": "Visa Core Rules and Visa Product and Service Rules",
+    "edition": "2026-04-18",
+    "rule": "ID# 0030640, Section 7.3.6.3, Table 7-2 Decline Response Code Use",
+    "url": "https://usa.visa.com/dam/VCOM/download/about-visa/visa-rules-public.pdf",
+    "verified": "primary"
+  },
+  "sources": {
+    "iso8583": {
+      "document": "ISO 8583 response codes (field 39), as listed on Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/ISO_8583",
+      "verified": "secondary"
+    }
+  },
+  "categories": [
+    {
+      "category": 1,
+      "name": "Issuer will never approve",
+      "class": "never",
+      "reattempts": {
+        "allowed": false
+      }
+    },
+    {
+      "category": 2,
+      "name": "Issuer cannot approve at this time",
+      "class": "later",
+      "reattempts": {
+        "allowed": true,
+        "max": 20,
+        "window_days": 30
+      }
+    },
+    {
+      "category": 3,
+      "name": "Data quality, revalidate payment information",
+      "class": "fix_data",
+      "reattempts": {
+        "allowed": true,
+        "max": 20,
+        "window_days": 30
+      }
+    },
+    {
+      "category": 4,
+      "name": "Generic response codes",
+      "class": "later",
+      "reattempts": {
+        "allowed": true,
+        "max": 20,
+        "window_days": 30
+      },
+      "note": "All other decline response codes."
+    }
+  ],
+  "history": [
+    {
+      "edition": "2020-04",
+      "change": "Four decline categories introduced.",
+      "source": "Visa bulletin AI10325, 3 September 2020"
+    },
+    {
+      "edition": "2021-04-17",
+      "change": "Codes 03, 62, 78 and 93 move from category 1 to category 2; categories 2 to 4 allow up to 15 reattempts in 30 days.",
+      "source": "Visa bulletin AI10325, 3 September 2020",
+      "url": "https://usa.visa.com/dam/VCOM/global/support-legal/documents/updates-to-rules-for-declined-transaction-resubmission-and-use-of-authorization-response-codes.pdf"
+    },
+    {
+      "edition": "2026-04-18",
+      "change": "Categories 2 to 4 allow up to 20 reattempts in 30 days. Code 83 joins category 2 from 25 July 2026.",
+      "source": "Visa Core Rules, 18 April 2026, ID# 0030640"
+    }
+  ],
+  "codes": [
+    {
+      "code": "04",
+      "meaning": "Pick up card (no fraud)",
+      "category": 1,
+      "reason": "pickup_card"
+    },
+    {
+      "code": "07",
+      "meaning": "Pick up card, special condition (fraud account)",
+      "category": 1,
+      "reason": "fraudulent"
+    },
+    {
+      "code": "12",
+      "meaning": "Invalid transaction",
+      "category": 1,
+      "reason": "transaction_not_allowed",
+      "class": "never"
+    },
+    {
+      "code": "14",
+      "meaning": "Invalid account number (no such number)",
+      "category": 1,
+      "reason": "invalid_number"
+    },
+    {
+      "code": "15",
+      "meaning": "No such issuer",
+      "category": 1,
+      "reason": "invalid_account"
+    },
+    {
+      "code": "41",
+      "meaning": "Lost card, pick up",
+      "category": 1,
+      "reason": "lost_card"
+    },
+    {
+      "code": "43",
+      "meaning": "Stolen card, pick up",
+      "category": 1,
+      "reason": "stolen_card"
+    },
+    {
+      "code": "46",
+      "meaning": "Closed account",
+      "category": 1,
+      "reason": "invalid_account"
+    },
+    {
+      "code": "57",
+      "meaning": "Transaction not permitted to cardholder",
+      "category": 1,
+      "reason": "transaction_not_allowed",
+      "class": "never"
+    },
+    {
+      "code": "R0",
+      "meaning": "Stop payment order",
+      "category": 1,
+      "reason": "stop_payment_order"
+    },
+    {
+      "code": "R1",
+      "meaning": "Revocation of authorization order",
+      "category": 1,
+      "reason": "revocation_of_authorization"
+    },
+    {
+      "code": "R3",
+      "meaning": "Revocation of all authorizations order",
+      "category": 1,
+      "reason": "revocation_of_all_authorizations"
+    },
+    {
+      "code": "03",
+      "meaning": "Invalid merchant",
+      "category": 2,
+      "reason": "invalid_merchant"
+    },
+    {
+      "code": "19",
+      "meaning": "Re-enter transaction",
+      "category": 2,
+      "reason": "reenter_transaction"
+    },
+    {
+      "code": "39",
+      "meaning": "No credit account",
+      "category": 2,
+      "reason": "invalid_account",
+      "class": "later"
+    },
+    {
+      "code": "51",
+      "meaning": "Not sufficient funds",
+      "category": 2,
+      "reason": "insufficient_funds"
+    },
+    {
+      "code": "52",
+      "meaning": "No checking account",
+      "category": 2,
+      "reason": "invalid_account",
+      "class": "later"
+    },
+    {
+      "code": "53",
+      "meaning": "No savings account",
+      "category": 2,
+      "reason": "invalid_account",
+      "class": "later"
+    },
+    {
+      "code": "59",
+      "meaning": "Suspected fraud",
+      "category": 2,
+      "reason": "suspected_fraud"
+    },
+    {
+      "code": "61",
+      "meaning": "Exceeds approval amount limit",
+      "category": 2,
+      "reason": "card_velocity_exceeded"
+    },
+    {
+      "code": "62",
+      "meaning": "Restricted card (card invalid in region or country)",
+      "category": 2,
+      "reason": "restricted_card"
+    },
+    {
+      "code": "65",
+      "meaning": "Exceeds withdrawal frequency limit",
+      "category": 2,
+      "reason": "card_velocity_exceeded"
+    },
+    {
+      "code": "75",
+      "meaning": "Allowable number of PIN-entry tries exceeded",
+      "category": 2,
+      "reason": "pin_try_exceeded"
+    },
+    {
+      "code": "78",
+      "meaning": "Blocked, first used or special condition (account is temporarily blocked)",
+      "category": 2,
+      "reason": "account_blocked"
+    },
+    {
+      "code": "83",
+      "meaning": "Fraud/Security (Visa use only)",
+      "category": 2,
+      "reason": "suspected_fraud",
+      "effective_from": "2026-07-25"
+    },
+    {
+      "code": "86",
+      "meaning": "Cannot verify PIN",
+      "category": 2,
+      "reason": "incorrect_pin",
+      "class": "later"
+    },
+    {
+      "code": "91",
+      "meaning": "Issuer or switch inoperative",
+      "category": 2,
+      "reason": "issuer_not_available"
+    },
+    {
+      "code": "93",
+      "meaning": "Transaction cannot be completed, violation of law",
+      "category": 2,
+      "reason": "transaction_not_allowed"
+    },
+    {
+      "code": "96",
+      "meaning": "System malfunction",
+      "category": 2,
+      "reason": "processing_error"
+    },
+    {
+      "code": "5C",
+      "meaning": "Transaction not supported/blocked by issuer",
+      "category": 2,
+      "reason": "transaction_not_allowed"
+    },
+    {
+      "code": "9G",
+      "meaning": "Blocked by cardholder/contact cardholder",
+      "category": 2,
+      "reason": "blocked_by_cardholder"
+    },
+    {
+      "code": "N3",
+      "meaning": "Cash service not available",
+      "category": 2,
+      "reason": "transaction_not_allowed"
+    },
+    {
+      "code": "N4",
+      "meaning": "Cash request exceeds issuer or approved limit",
+      "category": 2,
+      "reason": "card_velocity_exceeded"
+    },
+    {
+      "code": "Z5",
+      "meaning": "Valid account but amount not supported",
+      "category": 2,
+      "reason": "invalid_amount"
+    },
+    {
+      "code": "54",
+      "meaning": "Expired card or expiration date missing",
+      "category": 3,
+      "reason": "expired_card"
+    },
+    {
+      "code": "55",
+      "meaning": "PIN incorrect or missing",
+      "category": 3,
+      "reason": "incorrect_pin"
+    },
+    {
+      "code": "82",
+      "meaning": "Negative online CAM, dCVV, iCVV, or CVV results",
+      "category": 3,
+      "reason": "incorrect_cvc"
+    },
+    {
+      "code": "6P",
+      "meaning": "Verification failed (cardholder identification does not match issuer records)",
+      "category": 3,
+      "reason": "cardholder_data_mismatch"
+    },
+    {
+      "code": "N7",
+      "meaning": "Decline for CVV2 failure",
+      "category": 3,
+      "reason": "incorrect_cvc"
+    },
+    {
+      "code": "70",
+      "meaning": "PIN data required",
+      "category": 4,
+      "reason": "pin_required",
+      "category_in_regions": {
+        "category": 3,
+        "regions": [
+          "CEMEA",
+          "Europe"
+        ]
+      }
+    },
+    {
+      "code": "1A",
+      "meaning": "Additional customer authentication required",
+      "category": 4,
+      "reason": "authentication_required",
+      "category_in_regions": {
+        "category": 3,
+        "regions": [
+          "CEMEA",
+          "Europe"
+        ]
+      }
+    },
+    {
+      "code": "01",
+      "meaning": "Refer to card issuer",
+      "category": 4,
+      "reason": "call_issuer",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "05",
+      "meaning": "Do not honor",
+      "category": 4,
+      "reason": "do_not_honor",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "13",
+      "meaning": "Invalid amount",
+      "category": 4,
+      "reason": "invalid_amount",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "58",
+      "meaning": "Transaction not permitted to terminal",
+      "category": 4,
+      "reason": "transaction_not_allowed",
+      "meaning_source": "iso8583"
+    },
+    {
+      "code": "63",
+      "meaning": "Security violation",
+      "category": 4,
+      "reason": "suspected_fraud",
+      "meaning_source": "iso8583"
+    }
+  ]
+}
