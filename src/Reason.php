@@ -14,5 +14,15 @@ final readonly class Reason
         public string $id,
         public DeclineClass $class,
         public string $description,
+        public bool $disclose = true,
     ) {}
+
+    /**
+     * What to show the customer. Lost, stolen and fraud reasons are shown as a generic
+     * decline, as Stripe advises, so the message does not help someone testing stolen cards.
+     */
+    public function forCustomer(Catalog $catalog): self
+    {
+        return $this->disclose ? $this : $catalog->reason('generic_decline');
+    }
 }

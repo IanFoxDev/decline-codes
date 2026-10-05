@@ -9,8 +9,13 @@ namespace IanFoxDev\DeclineCodes;
  */
 final readonly class Decline
 {
+    /**
+     * @param ?Decline $network for a processor's decline (Stripe), the same decline read
+     *                          through the card network's profile, when the processor passed
+     *                          the network's raw codes on
+     */
     public function __construct(
-        public string $network,
+        public string $profile,
         public string $code,
         public string $meaning,
         public Reason $reason,
@@ -18,6 +23,7 @@ final readonly class Decline
         public Source $source,
         public ?int $category = null,
         public ?Advice $advice = null,
+        public ?Decline $network = null,
     ) {}
 
     /**

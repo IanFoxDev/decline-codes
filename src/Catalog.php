@@ -20,12 +20,14 @@ final class Catalog
 
     private ?CodeProfile $mastercard = null;
 
+    private ?StripeProfile $stripe = null;
+
     public function __construct(private readonly string $directory = __DIR__ . '/../data')
     {
         $data = Data::file($this->directory . '/reasons.json');
         foreach (Data::list($data, 'reasons') as $reason) {
             $id = Data::string($reason, 'id');
-            $this->reasons[$id] = new Reason($id, DeclineClass::from(Data::string($reason, 'class')), Data::string($reason, 'description'));
+            $this->reasons[$id] = new Reason($id, DeclineClass::from(Data::string($reason, 'class')), Data::string($reason, 'description'), ($reason['disclose'] ?? true) !== false);
         }
     }
 
@@ -55,6 +57,11 @@ final class Catalog
     public function mastercard(): CodeProfile
     {
         return $this->mastercard ??= new CodeProfile($this, Data::file($this->directory . '/mastercard.json'));
+    }
+
+    public function stripe(): StripeProfile
+    {
+        return $this->stripe ??= new StripeProfile($this, Data::file($this->directory . '/stripe.json'));
     }
 
     public function visa(): VisaProfile

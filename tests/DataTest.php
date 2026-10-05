@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class DataTest extends TestCase
 {
-    private const array NETWORKS = ['visa.json', 'iso8583.json', 'mastercard.json'];
+    private const array NETWORKS = ['visa.json', 'iso8583.json', 'mastercard.json', 'stripe.json'];
 
     public function testClassesMatchTheEnum(): void
     {
@@ -29,6 +29,7 @@ final class DataTest extends TestCase
         foreach (Data::list($this->json('reasons.json'), 'reasons') as $reason) {
             $id = Data::string($reason, 'id');
             self::assertMatchesRegularExpression('/^[a-z][a-z_]+$/', $id);
+            self::assertContains($reason['disclose'] ?? true, [true, false], $id);
             self::assertNotContains($id, $ids, "duplicate reason $id");
             self::assertNotNull(DeclineClass::tryFrom(Data::string($reason, 'class')), $id);
             Data::string($reason, 'description');
@@ -50,7 +51,9 @@ final class DataTest extends TestCase
                 $code = Data::string($record, 'code');
                 self::assertNotContains($code, $codes, "duplicate code $code in $file");
                 self::assertContains(Data::string($record, 'reason'), $reasons, "$file $code");
-                Data::string($record, 'meaning');
+                if ($file !== 'stripe.json') {
+                    Data::string($record, 'meaning');
+                }
                 $meaningSource = Data::optionalString($record, 'meaning_source');
                 if ($meaningSource !== null) {
                     self::assertArrayHasKey($meaningSource, $sources, "$file $code");
