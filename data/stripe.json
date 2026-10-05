@@ -1,0 +1,254 @@
+{
+  "network": "stripe",
+  "source": {
+    "document": "Stripe docs, decline codes",
+    "url": "https://docs.stripe.com/declines/codes",
+    "verified": "secondary",
+    "edition": "2026-10-05 (fetched; the page has no version)"
+  },
+  "sources": {
+    "card_declines": {
+      "document": "Stripe docs, card declines",
+      "url": "https://docs.stripe.com/declines/card",
+      "verified": "secondary",
+      "edition": "2026-10-05 (fetched)"
+    }
+  },
+  "advice_codes": {
+    "source": "card_declines",
+    "codes": [
+      {
+        "code": "do_not_try_again",
+        "effect": "never",
+        "meaning": "Do not use the card again for the same transaction."
+      },
+      {
+        "code": "try_again_later",
+        "effect": "later",
+        "meaning": "The issuer declined, but the payment can be retried."
+      },
+      {
+        "code": "confirm_card_data",
+        "effect": "fix_data",
+        "meaning": "Some of the card information is incorrect."
+      }
+    ]
+  },
+  "recommended_max_retries": {
+    "value": 8,
+    "source": "card_declines",
+    "quote": "Stripe recommends a maximum of eight retries for charges that permit retries."
+  },
+  "network_codes": {
+    "brands": {
+      "visa": "visa",
+      "mastercard": "mastercard"
+    },
+    "source": "card_declines",
+    "note": "network_decline_code and network_advice_code are 2 to 4 characters and mean different things per card brand."
+  },
+  "codes": [
+    {
+      "code": "authentication_required",
+      "reason": "authentication_required"
+    },
+    {
+      "code": "authentication_not_handled",
+      "reason": "authentication_required"
+    },
+    {
+      "code": "approve_with_id",
+      "reason": "reenter_transaction"
+    },
+    {
+      "code": "call_issuer",
+      "reason": "call_issuer"
+    },
+    {
+      "code": "card_not_supported",
+      "reason": "transaction_not_allowed"
+    },
+    {
+      "code": "card_velocity_exceeded",
+      "reason": "card_velocity_exceeded"
+    },
+    {
+      "code": "currency_not_supported",
+      "reason": "currency_not_supported"
+    },
+    {
+      "code": "do_not_honor",
+      "reason": "do_not_honor"
+    },
+    {
+      "code": "do_not_try_again",
+      "reason": "do_not_try_again",
+      "deprecated": true
+    },
+    {
+      "code": "duplicate_transaction",
+      "reason": "duplicate_transaction"
+    },
+    {
+      "code": "expired_card",
+      "reason": "expired_card"
+    },
+    {
+      "code": "fraudulent",
+      "reason": "fraudulent"
+    },
+    {
+      "code": "generic_decline",
+      "reason": "generic_decline"
+    },
+    {
+      "code": "incorrect_address",
+      "reason": "incorrect_address"
+    },
+    {
+      "code": "incorrect_cvc",
+      "reason": "incorrect_cvc"
+    },
+    {
+      "code": "incorrect_number",
+      "reason": "invalid_number"
+    },
+    {
+      "code": "incorrect_pin",
+      "reason": "incorrect_pin"
+    },
+    {
+      "code": "incorrect_zip",
+      "reason": "incorrect_address"
+    },
+    {
+      "code": "insufficient_funds",
+      "reason": "insufficient_funds"
+    },
+    {
+      "code": "invalid_account",
+      "reason": "invalid_account"
+    },
+    {
+      "code": "invalid_amount",
+      "reason": "invalid_amount"
+    },
+    {
+      "code": "invalid_cvc",
+      "reason": "incorrect_cvc"
+    },
+    {
+      "code": "invalid_expiry_month",
+      "reason": "invalid_expiry"
+    },
+    {
+      "code": "invalid_expiry_year",
+      "reason": "invalid_expiry"
+    },
+    {
+      "code": "invalid_number",
+      "reason": "invalid_number"
+    },
+    {
+      "code": "invalid_pin",
+      "reason": "incorrect_pin"
+    },
+    {
+      "code": "issuer_not_available",
+      "reason": "issuer_not_available"
+    },
+    {
+      "code": "lost_card",
+      "reason": "lost_card"
+    },
+    {
+      "code": "merchant_blacklist",
+      "reason": "blocked_by_merchant"
+    },
+    {
+      "code": "new_account_information_available",
+      "reason": "new_account_information"
+    },
+    {
+      "code": "no_action_taken",
+      "reason": "generic_decline"
+    },
+    {
+      "code": "not_permitted",
+      "reason": "transaction_not_allowed"
+    },
+    {
+      "code": "offline_pin_required",
+      "reason": "pin_required"
+    },
+    {
+      "code": "online_or_offline_pin_required",
+      "reason": "pin_required"
+    },
+    {
+      "code": "pickup_card",
+      "reason": "pickup_card"
+    },
+    {
+      "code": "pin_try_exceeded",
+      "reason": "pin_try_exceeded"
+    },
+    {
+      "code": "processing_error",
+      "reason": "processing_error"
+    },
+    {
+      "code": "reenter_transaction",
+      "reason": "reenter_transaction"
+    },
+    {
+      "code": "restricted_card",
+      "reason": "restricted_card"
+    },
+    {
+      "code": "revocation_of_all_authorizations",
+      "reason": "revocation_of_all_authorizations"
+    },
+    {
+      "code": "revocation_of_authorization",
+      "reason": "revocation_of_authorization"
+    },
+    {
+      "code": "security_violation",
+      "reason": "suspected_fraud"
+    },
+    {
+      "code": "service_not_allowed",
+      "reason": "transaction_not_allowed"
+    },
+    {
+      "code": "stolen_card",
+      "reason": "stolen_card"
+    },
+    {
+      "code": "stop_payment_order",
+      "reason": "stop_payment_order"
+    },
+    {
+      "code": "testmode_decline",
+      "reason": "test_card"
+    },
+    {
+      "code": "transaction_not_allowed",
+      "reason": "transaction_not_allowed"
+    },
+    {
+      "code": "try_again_later",
+      "reason": "generic_decline",
+      "deprecated": true
+    },
+    {
+      "code": "withdrawal_count_limit_exceeded",
+      "reason": "card_velocity_exceeded"
+    },
+    {
+      "code": "mobile_device_authentication_required",
+      "reason": "authentication_required"
+    }
+  ]
+}

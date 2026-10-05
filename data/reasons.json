@@ -80,7 +80,8 @@
     {
       "id": "suspected_fraud",
       "class": "later",
-      "description": "The issuer suspects fraud."
+      "description": "The issuer suspects fraud.",
+      "disclose": false
     },
     {
       "id": "pin_try_exceeded",
@@ -140,22 +141,26 @@
     {
       "id": "lost_card",
       "class": "never",
-      "description": "The card is reported lost."
+      "description": "The card is reported lost.",
+      "disclose": false
     },
     {
       "id": "stolen_card",
       "class": "never",
-      "description": "The card is reported stolen."
+      "description": "The card is reported stolen.",
+      "disclose": false
     },
     {
       "id": "pickup_card",
       "class": "never",
-      "description": "The issuer asks to keep the card."
+      "description": "The issuer asks to keep the card.",
+      "disclose": false
     },
     {
       "id": "fraudulent",
       "class": "never",
-      "description": "The issuer flagged the account as fraudulent."
+      "description": "The issuer flagged the account as fraudulent.",
+      "disclose": false
     },
     {
       "id": "invalid_number",
@@ -201,6 +206,32 @@
       "id": "policy_decline",
       "class": "later",
       "description": "The issuer declined under its own policy. Mastercard code 82."
+    },
+    {
+      "id": "currency_not_supported",
+      "class": "never",
+      "description": "The card does not support the currency."
+    },
+    {
+      "id": "incorrect_address",
+      "class": "fix_data",
+      "description": "The billing address or postal code does not match."
+    },
+    {
+      "id": "invalid_expiry",
+      "class": "fix_data",
+      "description": "The expiry month or year is invalid."
+    },
+    {
+      "id": "blocked_by_merchant",
+      "class": "never",
+      "description": "The payment matched the merchant's own block list.",
+      "disclose": false
+    },
+    {
+      "id": "test_card",
+      "class": "never",
+      "description": "A test card was used in live mode."
     }
   ]
 }
