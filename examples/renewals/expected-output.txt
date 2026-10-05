@@ -1,0 +1,37 @@
+1. Visa 51 on 1 October
+  decline     visa 51: insufficient_funds (later)
+  decision    retry_at at 2026-10-02 06:00
+  rule        schedule.later
+  customer    insufficient_funds
+
+   ... and again on 2 October
+  decline     visa 51: insufficient_funds (later)
+  decision    retry_at at 2026-10-04 06:00
+  rule        schedule.later
+  customer    insufficient_funds
+
+2. Mastercard 51 with MAC 27
+  decline     mastercard 51: insufficient_funds (later)
+  decision    retry_at at 2026-10-05 06:00
+  rule        mastercard.mac_27 (secondary source, 2026-09-30)
+  customer    insufficient_funds
+
+3. Stripe generic_decline carrying Visa 43
+  decline     stripe generic_decline: generic_decline (never)
+  network     visa 43: Stolen card, pick up
+  decision    never
+  rule        visa.category_1 (network rules, 2026-04-18)
+  customer    generic_decline
+
+4. Stripe incorrect_cvc
+  decline     stripe incorrect_cvc: incorrect_cvc (fix_data)
+  decision    needs_customer
+  rule        class.fix_data
+  customer    incorrect_cvc
+
+5. 21 attempts on 1 October, all Visa 05, hourly schedule
+  decline     visa 05: do_not_honor (later)
+  decision    retry_at at 2026-10-31 01:00
+  rule        visa.reattempt_limit (network rules, 2026-04-18)
+  customer    do_not_honor
+
